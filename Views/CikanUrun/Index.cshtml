@@ -1,0 +1,41 @@
+﻿@model IEnumerable<StockControl.Models.EntityFramework.CikanUrun>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    <a class="btn btn-success" href="/CikanUrun/Create">Yeni Ürün Çıkışı Ekle</a>
+</p>
+<h2>Ürün Çıkışı Listesi</h2>
+<table class="table table-bordered" id="tblMaterialsC">
+    <thead>
+        <tr>
+            <th>İŞLEM KODU</th>
+            <th>MAL GRUBU</th>
+            <th>ÇIKIŞ TARİHİ</th>
+            <th>ADET</th>
+            <th>SEVK YERİ</th>
+            <th>ÜRÜN ÇIKIŞ YERİ</th>
+            <th>DÜZENLE</th>
+            <th>SİL</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.IslemKodu</td>
+            <td>@item.Material.MaterialName</td>
+            <td>@item.CikisTarihi.Date.ToString("dd.MM.yyyy")</td>
+            <td>@item.Adet</td>
+            <td>@item.SevkYeri</td>
+            <td>@item.Depo.Yer</td>
+            <td><a class="btn btn-primary" href="/CikanUrun/Edit/@item.Id">Düzenle</a></td>
+            <td><a class="btn btn-warning btnMaterialDeleteC" data-id="@item.Id">Sil</a></td>
+        </tr>
+        }
+    </tbody>
+</table>

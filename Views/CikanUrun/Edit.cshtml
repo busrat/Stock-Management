@@ -1,0 +1,113 @@
+﻿@model StockControl.Models.EntityFramework.CikanUrun
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Ürün Çıkışı Düzenle</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.MaterialId, "Mal Grubu", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("MaterialId", null, htmlAttributes: new { @class = "form-control chosen" })
+            @Html.ValidationMessageFor(model => model.MaterialId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DepoId, "Ürün Çıkış Yeri", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("DepoId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DepoId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CikisTarihi, "Çıkış Tarihi", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CikisTarihi, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CikisTarihi, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Adet, "Adet", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Adet, new { htmlAttributes = new { @class = "form-control", min = "1" } })
+            @Html.ValidationMessageFor(model => model.Adet, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SevkYeri, "Sevk Yeri", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SevkYeri, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SevkYeri, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div id="gizle">
+        <i><label>Bu üründen stokta <text id="stok"></text> adet var</label></i>
+    </div>
+
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Kaydet" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+}
+
+@section scripts{
+    <script>
+        $(function () {
+            $('.chosen').chosen();
+        });
+        $('#gizle').hide();
+    </script>
+
+    <script type="text/javascript">
+            $(document).ready(function () {
+                $('#DepoId').change(function () { sendDataByAjax(); });
+                $('#MaterialId').change(function () { sendDataByAjax(); });
+        })
+    function sendDataByAjax() {
+        // iki dropdownlistten de seçilsin
+        var MaterialId = parseInt($('#MaterialId option:selected').val());
+        var DepoId= parseInt($('#DepoId option:selected').val());
+
+        if (isNaN(MaterialId) || isNaN(DepoId)) {
+            $('#gizle').hide();
+        }
+        else {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetStock", "CikanUrun")",
+                data: {
+                    'MaterialId': MaterialId,
+                    'DepoId': DepoId
+                },
+                success: function (data) {
+                    $("#stok").html(data);
+                    $('#gizle').show();
+                    $('#Adet').prop('max', data);
+                }
+            });
+        }
+        }
+    </script>
+}
+
+@*<div>
+        @Html.ActionLink("Listeye geri dön", "Index")
+    </div>*@

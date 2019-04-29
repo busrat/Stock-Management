@@ -1,0 +1,64 @@
+﻿@model StockControl.ViewModels.UrunViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<a href="@Url.Action("StokDurumu","MalzemeListesi")"><u>Excel Dosyası Olarak İndir</u></a>
+<h2>Stok Durumu</h2>
+
+<table class="table table-bordered" id="tblMaterials">
+    <thead>
+        <tr>
+            <th>MAL GRUBU</th>
+            <th>DEPO YERİ</th>
+            <th>ADET</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ var girenUrunToplam = Model.girenUrun
+                     .GroupBy(x => new { x.Depo.Yer, x.Material.MaterialName })
+                     .Select(g => new
+                     {
+                         g.Key.MaterialName,
+                         g.Key.Yer,
+                         total = g.Sum(t => t.Adet)
+                     });
+
+            var cikanUrunToplam = Model.cikanUrun
+                .GroupBy(x => new { x.Depo.Yer, x.Material.MaterialName })
+                .Select(g => new
+                {
+                    g.Key.MaterialName,
+                    g.Key.Yer,
+                    total = g.Sum(t => t.Adet)
+                });
+
+            foreach (var inProduct in girenUrunToplam)
+            {
+                var outProduct = cikanUrunToplam.Where(p => p.MaterialName == inProduct.MaterialName && p.Yer == inProduct.Yer).FirstOrDefault();
+                if (outProduct == null)
+                {
+
+                    <tr>
+                        <td> @inProduct.MaterialName </td>
+                        <td> @inProduct.Yer </td>
+                        <td> @inProduct.total</td>
+                    </tr>
+                }
+
+                else
+                {
+                    <tr>
+                        <td> @inProduct.MaterialName </td>
+                        <td> @inProduct.Yer </td>
+                        <td> @(inProduct.total - outProduct.total)</td>
+                    </tr>
+                }
+
+            }
+
+        }
+    </tbody>
+</table>
+
+

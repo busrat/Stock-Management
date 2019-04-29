@@ -1,0 +1,660 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="StockControlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CikanUrun">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaterialId" Type="int" Nullable="false" />
+          <Property Name="DepoId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="IslemKodu" Type="int" Nullable="false" />
+          <Property Name="CikisTarihi" Type="date" Nullable="false" />
+          <Property Name="Adet" Type="int" Nullable="false" />
+          <Property Name="SevkYeri" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OlusTarih" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="DegisTarih" Type="datetime2" Precision="7" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Depo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Yer" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ELMAH_Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Application" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Host" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Source" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="User" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StatusCode" Type="int" Nullable="false" />
+          <Property Name="TimeUtc" Type="datetime" Nullable="false" />
+          <Property Name="Sequence" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AllXml" Type="ntext" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GirenUrun">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaterialId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="DepoId" Type="int" Nullable="false" />
+          <Property Name="SaticiId" Type="int" Nullable="false" />
+          <Property Name="IslemKodu" Type="int" Nullable="false" />
+          <Property Name="GirisTarihi" Type="date" Nullable="false" />
+          <Property Name="Adet" Type="int" Nullable="false" />
+          <Property Name="Tutar" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ParaBirimi" Type="tinyint" Nullable="false" />
+          <Property Name="OlusTarih" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="DegisTarih" Type="datetime2" Precision="7" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="MaterialName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OlusTarih" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="DegisTarih" Type="datetime2" Precision="7" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Satıcı">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepoId" Type="int" />
+          <Property Name="SaticiAdi" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Adres" Type="nvarchar(max)" />
+          <Property Name="PostaKodu" Type="nvarchar(max)" />
+          <Property Name="Kent" Type="nvarchar(max)" />
+          <Property Name="CariKod" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OlusTarih" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="DegisTarih" Type="datetime2" Precision="7" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Departman" Type="nvarchar" MaxLength="50" />
+          <Property Name="Role" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="OlusTarih" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="DegisTarih" Type="datetime2" Precision="7" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CikanUrun_Depo">
+          <End Role="Depo" Type="Self.Depo" Multiplicity="1" />
+          <End Role="CikanUrun" Type="Self.CikanUrun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Depo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CikanUrun">
+              <PropertyRef Name="DepoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CikanUrun_Material1">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="CikanUrun" Type="Self.CikanUrun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CikanUrun">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CikanUrun_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="CikanUrun" Type="Self.CikanUrun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CikanUrun">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GirenUrun_Depo1">
+          <End Role="Depo" Type="Self.Depo" Multiplicity="1" />
+          <End Role="GirenUrun" Type="Self.GirenUrun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Depo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GirenUrun">
+              <PropertyRef Name="DepoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GirenUrun_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="GirenUrun" Type="Self.GirenUrun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GirenUrun">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GirenUrun_Satıcı">
+          <End Role="Satıcı" Type="Self.Satıcı" Multiplicity="1" />
+          <End Role="GirenUrun" Type="Self.GirenUrun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Satıcı">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GirenUrun">
+              <PropertyRef Name="SaticiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GirenUrun_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="GirenUrun" Type="Self.GirenUrun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GirenUrun">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Material_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Satıcı_Depo">
+          <End Role="Depo" Type="Self.Depo" Multiplicity="0..1" />
+          <End Role="Satıcı" Type="Self.Satıcı" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Depo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Satıcı">
+              <PropertyRef Name="DepoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StockControlModelStoreContainer">
+          <EntitySet Name="CikanUrun" EntityType="Self.CikanUrun" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Depo" EntityType="Self.Depo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GirenUrun" EntityType="Self.GirenUrun" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Satıcı" EntityType="Self.Satıcı" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CikanUrun_Depo" Association="Self.FK_CikanUrun_Depo">
+            <End Role="Depo" EntitySet="Depo" />
+            <End Role="CikanUrun" EntitySet="CikanUrun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CikanUrun_Material1" Association="Self.FK_CikanUrun_Material1">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="CikanUrun" EntitySet="CikanUrun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CikanUrun_User" Association="Self.FK_CikanUrun_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="CikanUrun" EntitySet="CikanUrun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GirenUrun_Depo1" Association="Self.FK_GirenUrun_Depo1">
+            <End Role="Depo" EntitySet="Depo" />
+            <End Role="GirenUrun" EntitySet="GirenUrun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GirenUrun_Material" Association="Self.FK_GirenUrun_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="GirenUrun" EntitySet="GirenUrun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GirenUrun_Satıcı" Association="Self.FK_GirenUrun_Satıcı">
+            <End Role="Satıcı" EntitySet="Satıcı" />
+            <End Role="GirenUrun" EntitySet="GirenUrun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GirenUrun_User" Association="Self.FK_GirenUrun_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="GirenUrun" EntitySet="GirenUrun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Material_User" Association="Self.FK_Material_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Satıcı_Depo" Association="Self.FK_Satıcı_Depo">
+            <End Role="Depo" EntitySet="Depo" />
+            <End Role="Satıcı" EntitySet="Satıcı" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StockControlModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="StockControlEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ELMAH_Error" EntityType="StockControlModel.ELMAH_Error" />
+          <EntitySet Name="CikanUrun" EntityType="StockControlModel.CikanUrun" />
+          <EntitySet Name="Depo" EntityType="StockControlModel.Depo" />
+          <EntitySet Name="GirenUrun" EntityType="StockControlModel.GirenUrun" />
+          <EntitySet Name="Material" EntityType="StockControlModel.Material" />
+          <EntitySet Name="Satıcı" EntityType="StockControlModel.Satıcı" />
+          <EntitySet Name="User" EntityType="StockControlModel.User" />
+          <AssociationSet Name="FK_CikanUrun_Depo" Association="StockControlModel.FK_CikanUrun_Depo">
+            <End Role="Depo" EntitySet="Depo" />
+            <End Role="CikanUrun" EntitySet="CikanUrun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CikanUrun_Material1" Association="StockControlModel.FK_CikanUrun_Material1">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="CikanUrun" EntitySet="CikanUrun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CikanUrun_User" Association="StockControlModel.FK_CikanUrun_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="CikanUrun" EntitySet="CikanUrun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GirenUrun_Depo1" Association="StockControlModel.FK_GirenUrun_Depo1">
+            <End Role="Depo" EntitySet="Depo" />
+            <End Role="GirenUrun" EntitySet="GirenUrun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Satıcı_Depo" Association="StockControlModel.FK_Satıcı_Depo">
+            <End Role="Depo" EntitySet="Depo" />
+            <End Role="Satıcı" EntitySet="Satıcı" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GirenUrun_Material" Association="StockControlModel.FK_GirenUrun_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="GirenUrun" EntitySet="GirenUrun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GirenUrun_Satıcı" Association="StockControlModel.FK_GirenUrun_Satıcı">
+            <End Role="Satıcı" EntitySet="Satıcı" />
+            <End Role="GirenUrun" EntitySet="GirenUrun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GirenUrun_User" Association="StockControlModel.FK_GirenUrun_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="GirenUrun" EntitySet="GirenUrun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Material_User" Association="StockControlModel.FK_Material_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="ELMAH_Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="Guid" Nullable="false" />
+          <Property Name="Application" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Host" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Source" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusCode" Type="Int32" Nullable="false" />
+          <Property Name="TimeUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AllXml" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CikanUrun">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaterialId" Type="Int32" Nullable="false" />
+          <Property Name="DepoId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="IslemKodu" Type="Int32" Nullable="false" />
+          <Property Name="CikisTarihi" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Adet" Type="Int32" Nullable="false" />
+          <Property Name="SevkYeri" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OlusTarih" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="DegisTarih" Type="DateTime" Precision="7" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Depo" Relationship="StockControlModel.FK_CikanUrun_Depo" FromRole="CikanUrun" ToRole="Depo" />
+          <NavigationProperty Name="Material" Relationship="StockControlModel.FK_CikanUrun_Material1" FromRole="CikanUrun" ToRole="Material" />
+          <NavigationProperty Name="User" Relationship="StockControlModel.FK_CikanUrun_User" FromRole="CikanUrun" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Depo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Yer" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CikanUrun" Relationship="StockControlModel.FK_CikanUrun_Depo" FromRole="Depo" ToRole="CikanUrun" />
+          <NavigationProperty Name="GirenUrun" Relationship="StockControlModel.FK_GirenUrun_Depo1" FromRole="Depo" ToRole="GirenUrun" />
+          <NavigationProperty Name="Satıcı" Relationship="StockControlModel.FK_Satıcı_Depo" FromRole="Depo" ToRole="Satıcı" />
+        </EntityType>
+        <EntityType Name="GirenUrun">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaterialId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="DepoId" Type="Int32" Nullable="false" />
+          <Property Name="SaticiId" Type="Int32" Nullable="false" />
+          <Property Name="IslemKodu" Type="Int32" Nullable="false" />
+          <Property Name="GirisTarihi" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Adet" Type="Int32" Nullable="false" />
+          <Property Name="Tutar" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ParaBirimi" Type="Byte" Nullable="false" />
+          <Property Name="OlusTarih" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="DegisTarih" Type="DateTime" Precision="7" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Depo" Relationship="StockControlModel.FK_GirenUrun_Depo1" FromRole="GirenUrun" ToRole="Depo" />
+          <NavigationProperty Name="Material" Relationship="StockControlModel.FK_GirenUrun_Material" FromRole="GirenUrun" ToRole="Material" />
+          <NavigationProperty Name="Satıcı" Relationship="StockControlModel.FK_GirenUrun_Satıcı" FromRole="GirenUrun" ToRole="Satıcı" />
+          <NavigationProperty Name="User" Relationship="StockControlModel.FK_GirenUrun_User" FromRole="GirenUrun" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="MaterialName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OlusTarih" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="DegisTarih" Type="DateTime" Precision="7" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CikanUrun" Relationship="StockControlModel.FK_CikanUrun_Material1" FromRole="Material" ToRole="CikanUrun" />
+          <NavigationProperty Name="GirenUrun" Relationship="StockControlModel.FK_GirenUrun_Material" FromRole="Material" ToRole="GirenUrun" />
+          <NavigationProperty Name="User" Relationship="StockControlModel.FK_Material_User" FromRole="Material" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Satıcı">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepoId" Type="Int32" />
+          <Property Name="SaticiAdi" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Adres" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostaKodu" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Kent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CariKod" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OlusTarih" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="DegisTarih" Type="DateTime" Precision="7" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Depo" Relationship="StockControlModel.FK_Satıcı_Depo" FromRole="Satıcı" ToRole="Depo" />
+          <NavigationProperty Name="GirenUrun" Relationship="StockControlModel.FK_GirenUrun_Satıcı" FromRole="Satıcı" ToRole="GirenUrun" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Departman" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="OlusTarih" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="DegisTarih" Type="DateTime" Precision="7" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CikanUrun" Relationship="StockControlModel.FK_CikanUrun_User" FromRole="User" ToRole="CikanUrun" />
+          <NavigationProperty Name="GirenUrun" Relationship="StockControlModel.FK_GirenUrun_User" FromRole="User" ToRole="GirenUrun" />
+          <NavigationProperty Name="Material" Relationship="StockControlModel.FK_Material_User" FromRole="User" ToRole="Material" />
+        </EntityType>
+        <Association Name="FK_CikanUrun_Depo">
+          <End Type="StockControlModel.Depo" Role="Depo" Multiplicity="1" />
+          <End Type="StockControlModel.CikanUrun" Role="CikanUrun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Depo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CikanUrun">
+              <PropertyRef Name="DepoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CikanUrun_Material1">
+          <End Type="StockControlModel.Material" Role="Material" Multiplicity="1" />
+          <End Type="StockControlModel.CikanUrun" Role="CikanUrun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CikanUrun">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CikanUrun_User">
+          <End Type="StockControlModel.User" Role="User" Multiplicity="1" />
+          <End Type="StockControlModel.CikanUrun" Role="CikanUrun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CikanUrun">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GirenUrun_Depo1">
+          <End Type="StockControlModel.Depo" Role="Depo" Multiplicity="1" />
+          <End Type="StockControlModel.GirenUrun" Role="GirenUrun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Depo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GirenUrun">
+              <PropertyRef Name="DepoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Satıcı_Depo">
+          <End Type="StockControlModel.Depo" Role="Depo" Multiplicity="0..1" />
+          <End Type="StockControlModel.Satıcı" Role="Satıcı" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Depo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Satıcı">
+              <PropertyRef Name="DepoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GirenUrun_Material">
+          <End Type="StockControlModel.Material" Role="Material" Multiplicity="1" />
+          <End Type="StockControlModel.GirenUrun" Role="GirenUrun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GirenUrun">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GirenUrun_Satıcı">
+          <End Type="StockControlModel.Satıcı" Role="Satıcı" Multiplicity="1" />
+          <End Type="StockControlModel.GirenUrun" Role="GirenUrun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Satıcı">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GirenUrun">
+              <PropertyRef Name="SaticiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GirenUrun_User">
+          <End Type="StockControlModel.User" Role="User" Multiplicity="1" />
+          <End Type="StockControlModel.GirenUrun" Role="GirenUrun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GirenUrun">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Material_User">
+          <End Type="StockControlModel.User" Role="User" Multiplicity="1" />
+          <End Type="StockControlModel.Material" Role="Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StockControlModelStoreContainer" CdmEntityContainer="StockControlEntities">
+          <EntitySetMapping Name="ELMAH_Error">
+            <EntityTypeMapping TypeName="StockControlModel.ELMAH_Error">
+              <MappingFragment StoreEntitySet="ELMAH_Error">
+                <ScalarProperty Name="AllXml" ColumnName="AllXml" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Application" ColumnName="Application" />
+                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CikanUrun">
+            <EntityTypeMapping TypeName="StockControlModel.CikanUrun">
+              <MappingFragment StoreEntitySet="CikanUrun">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DegisTarih" ColumnName="DegisTarih" />
+                <ScalarProperty Name="OlusTarih" ColumnName="OlusTarih" />
+                <ScalarProperty Name="SevkYeri" ColumnName="SevkYeri" />
+                <ScalarProperty Name="Adet" ColumnName="Adet" />
+                <ScalarProperty Name="CikisTarihi" ColumnName="CikisTarihi" />
+                <ScalarProperty Name="IslemKodu" ColumnName="IslemKodu" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DepoId" ColumnName="DepoId" />
+                <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Depo">
+            <EntityTypeMapping TypeName="StockControlModel.Depo">
+              <MappingFragment StoreEntitySet="Depo">
+                <ScalarProperty Name="Yer" ColumnName="Yer" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GirenUrun">
+            <EntityTypeMapping TypeName="StockControlModel.GirenUrun">
+              <MappingFragment StoreEntitySet="GirenUrun">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DegisTarih" ColumnName="DegisTarih" />
+                <ScalarProperty Name="OlusTarih" ColumnName="OlusTarih" />
+                <ScalarProperty Name="ParaBirimi" ColumnName="ParaBirimi" />
+                <ScalarProperty Name="Tutar" ColumnName="Tutar" />
+                <ScalarProperty Name="Adet" ColumnName="Adet" />
+                <ScalarProperty Name="GirisTarihi" ColumnName="GirisTarihi" />
+                <ScalarProperty Name="IslemKodu" ColumnName="IslemKodu" />
+                <ScalarProperty Name="SaticiId" ColumnName="SaticiId" />
+                <ScalarProperty Name="DepoId" ColumnName="DepoId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Material">
+            <EntityTypeMapping TypeName="StockControlModel.Material">
+              <MappingFragment StoreEntitySet="Material">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DegisTarih" ColumnName="DegisTarih" />
+                <ScalarProperty Name="OlusTarih" ColumnName="OlusTarih" />
+                <ScalarProperty Name="MaterialName" ColumnName="MaterialName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Satıcı">
+            <EntityTypeMapping TypeName="StockControlModel.Satıcı">
+              <MappingFragment StoreEntitySet="Satıcı">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DegisTarih" ColumnName="DegisTarih" />
+                <ScalarProperty Name="OlusTarih" ColumnName="OlusTarih" />
+                <ScalarProperty Name="CariKod" ColumnName="CariKod" />
+                <ScalarProperty Name="Kent" ColumnName="Kent" />
+                <ScalarProperty Name="PostaKodu" ColumnName="PostaKodu" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="SaticiAdi" ColumnName="SaticiAdi" />
+                <ScalarProperty Name="DepoId" ColumnName="DepoId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="StockControlModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DegisTarih" ColumnName="DegisTarih" />
+                <ScalarProperty Name="OlusTarih" ColumnName="OlusTarih" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Departman" ColumnName="Departman" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

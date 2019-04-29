@@ -1,0 +1,133 @@
+﻿@model StockControl.ViewModels.UrunViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<a href="@Url.Action("IslemPanosu","IslemPanosu")"><u>Excel Dosyası Olarak İndir</u></a>
+
+<h2>İşlem Panosu</h2>
+<h4>Malzeme Grubu İşlemleri</h4>
+<table class="table table-bordered" id="tblMaterials">
+    <thead>
+        <tr>
+            <th>MAL GRUBU</th>
+            <th>KULLANICI ADI</th>
+            <th>DEPARTMAN</th>
+            <th>OLUŞTURULMA TARİHİ</th>
+            <th>DEĞİŞTİRİLME TARİHİ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.material)
+        {
+            <tr>
+                <td>@item.MaterialName</td>
+                <td>@item.User.Username</td>
+                <td>@item.User.Departman</td>
+                <td>@item.OlusTarih</td>
+                @if (item.DegisTarih == null)
+                {
+                    <td> - </td>
+                }
+                else
+                {
+                    <td>@item.DegisTarih</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h4>Ürün Girişi İşlemleri</h4>
+<table class="table table-bordered" id="tblMaterialsG">
+    <thead>
+        <tr>
+            <th>İŞLEM KODU</th>
+            <th>MAL GRUBU</th>
+            <th>GİRİŞ TARİHİ</th>
+            <th>ADET</th>
+            <th>TUTAR</th>
+            <th>SATICI ADI</th>
+            <th>DEPO YERİ</th>
+            <th>KULLANICI ADI</th>
+            <th>DEPARTMAN</th>
+            <th>OLUŞTURULMA TARİHİ</th>
+            <th>DEĞİŞTİRİLME TARİHİ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item2 in Model.girenUrun)
+        {
+        <tr>
+            <td>@item2.IslemKodu</td>
+            <td>@item2.Material.MaterialName</td>
+            <td>@item2.GirisTarihi.Date.ToString("dd.MM.yyyy")</td>
+            <td>@item2.Adet</td>
+            @if (item2.ParaBirimi == 1)
+            {
+                <td>@item2.Tutar.ToString("0.00") TL</td>}
+            @if (item2.ParaBirimi == 2)
+            {
+                <td>@item2.Tutar.ToString("0.00") USD</td>}
+            @if (item2.ParaBirimi == 3)
+            {
+                <td>@item2.Tutar.ToString("0.00") EUR</td>}
+            <td>@item2.Satıcı.SaticiAdi</td>
+            <td>@item2.Depo.Yer</td>
+            <td>@item2.User.Username</td>
+            <td>@item2.User.Departman</td>
+            <td>@item2.OlusTarih</td>
+            @if (item2.DegisTarih == null)
+            {
+                <td> - </td>
+            }
+            else
+            {
+                <td>@item2.DegisTarih</td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>
+
+<h4>Ürün Çıkışı İşlemleri</h4>
+<table class="table table-bordered" id="tblMaterialsC">
+    <thead>
+        <tr>
+            <th>İŞLEM KODU</th>
+            <th>MAL GRUBU</th>
+            <th>ÇIKIŞ TARİHİ</th>
+            <th>ADET</th>
+            <th>SEVK YERİ</th>
+            <th>ÜRÜN ÇIKIŞ YERİ</th>
+            <th>KULLANICI ADI</th>
+            <th>DEPARTMAN</th>
+            <th>OLUŞTURULMA TARİHİ</th>
+            <th>DEĞİŞTİRİLME TARİHİ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item3 in Model.cikanUrun)
+        {
+            <tr>
+                <td>@item3.IslemKodu</td>
+                <td>@item3.Material.MaterialName</td>
+                <td>@item3.CikisTarihi.Date.ToString("dd.MM.yyyy")</td>
+                <td>@item3.Adet</td>
+                <td>@item3.SevkYeri</td>
+                <td>@item3.Depo.Yer</td>
+                <td>@item3.User.Username</td>
+                <td>@item3.User.Departman</td>
+                <td>@item3.OlusTarih</td>
+                @if (item3.DegisTarih == null)
+                {
+                    <td> - </td>
+                }
+                else
+                {
+                    <td>@item3.DegisTarih</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

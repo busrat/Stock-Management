@@ -1,0 +1,50 @@
+﻿@model IEnumerable<StockControl.Models.EntityFramework.GirenUrun>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    <a class="btn btn-success" href="/GirenUrun/Create">Yeni Ürün Girişi Ekle</a>
+</p>
+<h2>Ürün Girişi Listesi</h2>
+<table class="table table-bordered" id="tblMaterialsG">
+    <thead>
+        <tr>
+            <th>İŞLEM KODU</th>
+            <th>MAL GRUBU</th>
+            <th>GİRİŞ TARİHİ</th>
+            <th>ADET</th>
+            <th>TUTAR</th>
+            <th>SATICI ADI</th>
+            <th>DEPO YERİ</th>
+            <th>DÜZENLE</th>
+            <th>SİL</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.IslemKodu</td>
+            <td>@item.Material.MaterialName</td>
+            <td>@item.GirisTarihi.Date.ToString("dd.MM.yyyy")</td>
+            <td>@item.Adet</td>
+            @if (item.ParaBirimi == 1)
+            {
+                <td>@item.Tutar.ToString("0.00") TL</td>}
+            @if (item.ParaBirimi == 2)
+            {
+                <td>@item.Tutar.ToString("0.00") USD</td>}
+            @if (item.ParaBirimi == 3)
+            {
+                <td>@item.Tutar.ToString("0.00") EUR</td>}
+            <td>@item.Satıcı.SaticiAdi</td>
+            <td>@item.Depo.Yer</td>
+            <td><a class="btn btn-primary" href="/GirenUrun/Edit/@item.Id">Düzenle</a></td>
+            <td><a class="btn btn-warning btnMaterialDeleteG" data-id="@item.Id">Sil</a></td>
+        </tr>
+        }
+    </tbody>
+</table>

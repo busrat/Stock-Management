@@ -1,0 +1,67 @@
+﻿@model StockControl.Models.EntityFramework.CikanUrun
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CikanUrun</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CikisTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CikisTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Adet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SevkYeri)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SevkYeri)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IslemKodu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IslemKodu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Depo.Yer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Depo.Yer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Material.MaterialName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Material.MaterialName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

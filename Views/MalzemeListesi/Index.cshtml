@@ -1,0 +1,68 @@
+﻿@model StockControl.ViewModels.UrunViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a href="@Url.Action("MalzemeListesi","MalzemeListesi")"><u>Excel Dosyası Olarak İndir</u></a>
+<h2>Malzeme Listesi</h2>
+<table class="table table-bordered" id="tblMaterials">
+    <thead>
+        <tr>
+            <th>İŞLEM KODU</th>
+            <th>MAL GRUBU</th>
+            <th>GİRİŞ TARİHİ</th>
+            <th>ÇIKIŞ TARİHİ</th>
+            <th>ADET</th>
+            <th>TUTAR</th>
+            <th>SATICI ADI</th>
+            <th>DEPO YERİ</th>
+            <th>SEVK YERİ</th>
+            <th>KULLANICI ADI</th>
+            <th>DEPARTMAN</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.girenUrun)
+        {
+        <tr>
+            <td>@item.IslemKodu</td>
+            <td>@item.Material.MaterialName</td>
+            <td>@item.GirisTarihi.Date.ToString("dd.MM.yyyy")</td>
+            <td> - </td>
+            <td>@item.Adet</td>
+            @if (item.ParaBirimi == 1)
+            {
+                <td>@item.Tutar.ToString("0.00") TL</td>}
+            @if (item.ParaBirimi == 2)
+            {
+                <td>@item.Tutar.ToString("0.00") USD</td>}
+            @if (item.ParaBirimi == 3)
+            {
+                <td>@item.Tutar.ToString("0.00") EUR</td>}
+            <td>@item.Satıcı.SaticiAdi</td>
+            <td>@item.Depo.Yer</td>
+            <td> - </td>
+            <td>@item.User.Username</td>
+            <td>@item.User.Departman</td>
+        </tr>
+        }
+        @foreach (var item2 in Model.cikanUrun)
+        {
+            <tr>
+                <td>@item2.IslemKodu</td>
+                <td>@item2.Material.MaterialName</td>
+                <td> - </td>
+                <td>@item2.CikisTarihi.Date.ToString("dd.MM.yyyy")</td>
+                <td>@item2.Adet</td>
+                <td> - </td>
+                <td> - </td>
+                <td>@item2.Depo.Yer</td>
+                <td>@item2.SevkYeri</td>
+                <td>@item2.User.Username</td>
+                <td>@item2.User.Departman</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

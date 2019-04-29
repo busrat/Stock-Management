@@ -1,0 +1,31 @@
+﻿@model StockControl.Models.EntityFramework.Material
+
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Malzeme Grubu Düzenle</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(m => m.MaterialName, "Mal Grubu")
+                @Html.TextBoxFor(m => m.MaterialName, new { @class = "form control" })
+                @Html.ValidationMessageFor(m => m.MaterialName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @Html.HiddenFor(m => m.Id)
+        <button type="submit" class="btn btn-success">Kaydet</button>
+    </div>
+}
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>    }
+
+

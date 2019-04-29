@@ -1,0 +1,70 @@
+﻿@model StockControl.ViewModels.UrunViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Yönetim Paneli</h2>
+
+<p>
+    <a class="btn btn-success" href="/YoneticiPaneli/UserCreateNew">Yeni Kullanıcı Ekle</a>
+</p>
+<h4>Kullanıcı İşlemleri</h4>
+<table class="table table-bordered" id="tblMaterialsY">
+    <thead>
+        <tr>
+            <th>KULLANICI ADI</th>
+            <th>ŞİFRE</th>
+            <th>DEPARTMAN</th>
+            <th>YETKİ</th>
+            <th>DÜZENLE</th>
+            <th>SİL</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.user)
+        {
+        <tr>
+            <td>@item.Username</td>
+            <td>*********</td>
+            <td>@item.Departman</td>
+            <td>@item.Role</td>
+            <td><a class="btn btn-primary" href="/YoneticiPaneli/UserEdit/@item.Id">Düzenle</a></td>
+            <td><a class="btn btn-warning btnMaterialDeleteY" data-id="@item.Id">Sil</a></td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a class="btn btn-success" href="/YoneticiPaneli/SaticiCreate">Yeni Satıcı Ekle</a>
+</p>
+<h4>Satıcı İşlemleri</h4>
+<table class="table table-bordered" id="tblMaterialsY2">
+    <thead>
+        <tr>
+            <th>SATICI ADI</th>
+            <th>ADRES</th>
+            <th>POSTA KODU</th>
+            <th>KENT</th>
+            <th>CARİ KOD</th>
+            <th>DÜZENLE</th>
+            <th>SİL</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.satici)
+        {
+        <tr>
+            <td>@item.SaticiAdi</td>
+            <td>@item.Adres</td>
+            <td>@item.PostaKodu</td>
+            <td>@item.Kent</td>
+            <td>@item.CariKod</td>
+            <td><a class="btn btn-primary" href="/YoneticiPaneli/SaticiEdit/@item.Id">Düzenle</a></td>
+            <td><a class="btn btn-warning btnMaterialDeleteY2" data-id="@item.Id">Sil</a></td>
+        </tr>
+        }
+    </tbody>
+</table>
+

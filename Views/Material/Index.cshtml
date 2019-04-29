@@ -1,0 +1,31 @@
+﻿@using StockControl.Models.EntityFramework
+@model List<Material>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (User.IsInRole("A"))
+{
+    <a class="btn btn-success" href="/Material/New">Yeni Malzeme Grubu Ekle</a>
+}
+    <h2>Malzeme Grubu Listesi</h2>
+    <table class="table table-bordered" id="tblMaterials">
+        <thead>
+            <tr>
+                <th>MAL GRUBU</th>
+                <th>DÜZENLE</th>
+                <th>SİL</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var material in Model)
+            {
+                    <tr>
+                        <td>@material.MaterialName</td>
+                        <td><a class="btn btn-primary" href="/Material/Update/@material.Id">Düzenle</a></td>
+                        <td><a class="btn btn-warning btnMaterialDelete" data-id="@material.Id">Sil</a></td>
+                    </tr>
+            }
+        </tbody>
+    </table>
+    <div id="materialList"></div>

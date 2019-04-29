@@ -1,0 +1,75 @@
+﻿@model StockControl.Models.EntityFramework.GirenUrun
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>GirenUrun</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.GirisTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GirisTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Adet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tutar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tutar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Satıcı.SaticiAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Satıcı.SaticiAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IslemKodu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IslemKodu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Depo.Yer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Depo.Yer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Material.MaterialName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Material.MaterialName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
