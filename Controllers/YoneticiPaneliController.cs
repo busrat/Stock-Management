@@ -47,7 +47,7 @@ namespace StockControl.Controllers
         public ActionResult UserCreate(User user)
         {
             MesajViewModel model = new MesajViewModel();
-            if (db.User.Where(x => x.Username.ToLower() == user.Username.ToLower()).Any())
+            if (db.User.Where(x=>x.Status).Where(x => x.Username.ToLower() == user.Username.ToLower()).Any())
             {
                 model.Mesaj = user.Username + " zaten mevcut";
                 return View("_Mesaj", model);
