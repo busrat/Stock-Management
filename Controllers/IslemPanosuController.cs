@@ -80,7 +80,7 @@ namespace StockControl.Controllers
                     Sheet2.Cells[string.Format("H{0}", row2)].Value = item2.User.Username;
                     Sheet2.Cells[string.Format("I{0}", row2)].Value = item2.User.Departman;
                     Sheet2.Cells[string.Format("J{0}", row2)].Value = "" + item2.OlusTarih.ToString("dd.MM.yyyy HH:mm:ss");
-                    Sheet2.Cells[string.Format("K{0}", row)].Value = "" + item2.DegisTarih?.ToString("dd.MM.yyyy HH:mm:ss") ?? "";
+                    Sheet2.Cells[string.Format("K{0}", row2)].Value = "" + item2.DegisTarih?.ToString("dd.MM.yyyy HH:mm:ss") ?? "";
                 row2++;
             }
             Sheet2.Cells["A:AZ"].AutoFitColumns();
@@ -108,7 +108,7 @@ namespace StockControl.Controllers
                     Sheet3.Cells[string.Format("G{0}", row3)].Value = item3.User.Username;
                     Sheet3.Cells[string.Format("H{0}", row3)].Value = item3.User.Departman;
                     Sheet3.Cells[string.Format("I{0}", row3)].Value = "" + item3.OlusTarih.ToString("dd.MM.yyyy HH:mm:ss");
-                    Sheet3.Cells[string.Format("J{0}", row)].Value = "" + item3.DegisTarih?.ToString("dd.MM.yyyy HH:mm:ss") ?? "";
+                    Sheet3.Cells[string.Format("J{0}", row3)].Value = "" + item3.DegisTarih?.ToString("dd.MM.yyyy HH:mm:ss") ?? "";
                 row3++;
             }   
             Sheet3.Cells["A:AZ"].AutoFitColumns();
