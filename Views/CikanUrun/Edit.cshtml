@@ -1,4 +1,4 @@
-﻿@model StockControl.Models.EntityFramework.CikanUrun
+@model StockControl.Models.EntityFramework.CikanUrun
 
 @{
     ViewBag.Title = "Edit";
@@ -77,16 +77,18 @@
     </script>
 
     <script type="text/javascript">
-            $(document).ready(function () {
-                sendDataByAjax();
+        var Material = $("#MaterialId").val();
+        var Depo = $("#DepoId").val();
+        $(document).ready(function () {
+                sendDataByAjax(); 
                 $('#DepoId').change(function () { sendDataByAjax(); });
                 $('#MaterialId').change(function () { sendDataByAjax(); });
         })
     function sendDataByAjax() {
         // iki dropdownlistten de seçilsin
         var MaterialId = parseInt($('#MaterialId option:selected').val());
-        var DepoId= parseInt($('#DepoId option:selected').val());
-
+        var DepoId = parseInt($('#DepoId option:selected').val());
+        
         if (isNaN(MaterialId) || isNaN(DepoId)) {
             $('#gizle').hide();
         }
@@ -99,9 +101,16 @@
                     'DepoId': DepoId
                 },
                 success: function (data) {
-                    $("#stok").html(data);
-                    $('#gizle').show();
-                    $('#Adet').prop('max', data);
+                    if (Material == MaterialId && Depo== DepoId) {
+                        $('#stok').html(parseInt(data) + parseInt($('#Adet').val()));
+                        $('#gizle').show();
+                        $('#Adet').prop('max', parseInt(data) + parseInt($('#Adet').val()));
+                    }
+                    else {
+                        $('#stok').html(data);
+                        $('#gizle').show();
+                        $('#Adet').prop('max',data);
+                    }
                 }
             });
         }
